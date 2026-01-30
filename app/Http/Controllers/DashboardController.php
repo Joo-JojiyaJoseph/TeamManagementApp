@@ -48,7 +48,7 @@ class DashboardController extends Controller
                         ->where('status', 'active')
                         ->count(),
                     'tasksInProgress' => Task::whereIn('project_id',
-                        Project::whereIn('team_id', $teamIds)->pluck('id')
+                        Project::whereIn('team_id', $teamIds)->pluck('projects.id')
                     )->where('status', 'in-progress')->count(),
                 ],
                 'teams' => $teams,
@@ -58,7 +58,7 @@ class DashboardController extends Controller
                     ->limit(5)
                     ->get(),
                 'recentTasks' => Task::whereIn('project_id',
-                    Project::whereIn('team_id', $teamIds)->pluck('id')
+                    Project::whereIn('team_id', $teamIds)->pluck('projects.id')
                 )
                     ->with(['project', 'assignee'])
                     ->latest()
