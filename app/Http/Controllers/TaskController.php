@@ -23,8 +23,8 @@ class TaskController extends Controller
         if ($user->isEmployee()) {
             $query->where('assigned_to', $user->id);
         } elseif ($user->isManager()) {
-            $teamIds = $user->managedTeams()->pluck('id');
-            $query->whereIn('project_id', Project::whereIn('team_id', $teamIds)->pluck('id'));
+            $teamIds = $user->managedTeams()->pluck('teams.id');
+            $query->whereIn('project_id', Project::whereIn('team_id', $teamIds)->pluck('projects.id'));
         }
 
         return Inertia::render('Tasks/Index', [

@@ -20,7 +20,7 @@ class ProjectController extends Controller
         $query = Project::with(['team', 'tasks']);
 
         if (!$user->isAdmin()) {
-            $teamIds = $user->teams()->pluck('id');
+            $teamIds = $user->teams()->pluck('teams.id');
             $query->whereIn('team_id', $teamIds);
         }
 
